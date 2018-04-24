@@ -1,16 +1,16 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
-WORKDIR /app
+FROM microsoft/aspnetcore-build:2.0.0 AS build
 
-# copy csproj and restore as distinct layers
-COPY *.csproj ./
+WORKDIR /code
+
+COPY . .
+
 RUN dotnet restore
 
-# copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish --output /output --configuration Release
 
-# build runtime image
-FROM microsoft/aspnetcore:2.0
-WORKDIR /app
-COPY --from=build-env /app/out .
+FROM microsoft/aspnetcore:2.0.0
+
+COPY --from=build /output /app
+
+WORKDIR /app  
 ENTRYPOINT ["emc", "emc.dll"]
