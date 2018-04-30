@@ -22,6 +22,11 @@ namespace EMC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddRouting(options =>
+                {
+                    options.LowercaseUrls = true;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
