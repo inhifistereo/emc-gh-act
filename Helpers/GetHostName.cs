@@ -10,4 +10,5 @@ namespace EMC.Helpers
     {
         public String hostname = System.Net.Dns.GetHostName();
     }
+
 }
