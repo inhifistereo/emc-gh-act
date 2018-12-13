@@ -14,8 +14,8 @@ namespace EMC.Controllers
         {
             return View();
         }
-        [Route("about")]
-        public IActionResult About()
+        [Route("host")]
+        public IActionResult Host()
         {
             ViewData["Message"] = "Your application description page.";
 

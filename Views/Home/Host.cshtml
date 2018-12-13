@@ -1,16 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Host";
 }
 @{ 
     @using EMC.Helpers;
     var getHost = new GetHostName();
 }
 
-
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-
-<p>Use this area to provide additional information.</p>
-
 
 <h1>@getHost.hostname</h1>
