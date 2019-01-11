@@ -21,13 +21,6 @@ namespace EMC.Controllers
 
             return View();
         }
-        [Route("contact")]
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
 
         public IActionResult Error()
         {
