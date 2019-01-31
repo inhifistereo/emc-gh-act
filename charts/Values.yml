@@ -1,0 +1,10 @@
+replicaCount: 1
+image:
+  private: false
+  pullPolicy: Always
+service:
+  internalPort: 80
+  externalPort: 80
+ingress:
+  enabled: true
+  basedomain: 15e5259794a149b2b0f6.eastus2.aksapp.io

@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Dotnet core demo on AKS 
+name: emctest
+version: v0.1.0
