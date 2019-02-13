@@ -29,10 +29,6 @@ steps:
 - bash: helm package --version $(build.buildId) --destination $(build.artifactStagingDirectory) charts/$(projectName)
   displayName: 'helm package'
 
-- bash: az acr helm push -n $(registryName) -u $(registryLogin) -p $(registryPassword) $(build.artifactStagingDirectory)/$(projectName)-$(build.buildId).tgz
-  displayName: 'az acr helm push'
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
