@@ -1,23 +1,23 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "sampleapp.fullname" . }}
+  name: {{ include "emctest.fullname" . }}
   labels:
-    app: {{ template "sampleapp.name" . }}
-    chart: {{ template "sampleapp.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ include "emctest.name" . }}
+    helm.sh/chart: {{ include "emctest.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "sampleapp.name" . }}
-      release: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ include "emctest.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "sampleapp.name" . }}
-        release: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ include "emctest.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 80
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -35,36 +35,17 @@ spec:
             httpGet:
               path: /
               port: http
-          env:
-            - name: APPINSIGHTS_INSTRUMENTATIONKEY
-              value: {{ .Values.applicationInsights.InstrumentationKey }}
-            {{- $root := . }}
-            {{- range $ref, $values := .Values.secrets }}
-            {{- range $key, $value := $values }}
-            - name: {{ $ref | upper }}_{{ $key | upper }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "sampleapp.fullname" $root }}-{{ $ref }}
-                  key: {{ $key }}
-            {{- end }}
-            {{- end }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- if .Values.imagePullSecrets }}
-      imagePullSecrets:
-      {{- range .Values.imagePullSecrets }}
-        - name: {{ . }}
-      {{- end}}
-    {{- end }}
-    {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
       tolerations:
-{{ toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
     {{- end }}
