@@ -1,16 +1,21 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/dotnet:2.1-sdk AS builder
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
+# caches restore result by copying csproj file separately
+COPY *.csproj .
 RUN dotnet restore
 
-# Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+COPY . .
+RUN dotnet publish --output /app/ --configuration Release
+RUN sed -n 's:.*<AssemblyName>\(.*\)</AssemblyName>.*:\1:p' *.csproj > __assemblyname
+RUN if [ ! -s __assemblyname ]; then filename=$(ls *.csproj); echo ${filename%.*} > __assemblyname; fi
 
-# Build runtime image
-FROM microsoft/aspnetcore:2.0
+# Stage 2
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "EMC.dll"]
+COPY --from=builder /app .
+
+ENV PORT 80
+EXPOSE 80
+
+ENTRYPOINT dotnet $(cat /app/__assemblyname).dll

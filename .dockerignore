@@ -1,2 +1,5 @@
-bin\
-obj\
+Dockerfile
+draft.toml
+charts/
+bin/
+obj/
