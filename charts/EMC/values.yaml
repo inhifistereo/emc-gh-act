@@ -5,9 +5,9 @@ replicaCount: 1
 image:
   pullPolicy: IfNotPresent
 service:
-  name: dotnetcore
+  name: emctest2
   type: ClusterIP
-  externalPort: 80
+  externalPort: 8080
   internalPort: 80
 resources:
   limits:
@@ -17,4 +17,4 @@ resources:
     cpu: 250m
     memory: 256Mi
 ingress:
-  enabled: false
+  enabled: true

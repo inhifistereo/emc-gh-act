@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: emctest
-        image: dptest.azurecr.io/emctest:version5.0
+        image: dptest.azurecr.io/emctest:latest
       imagePullSecrets:
       - name: acr-auth
 ---
