@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "fullname" . }}
   labels:
-    chart: "{{ .Chart.Name }}
+    chart: {{ .Chart.Name }}
 spec:
   type: {{ .Values.service.type }}
   ports:
