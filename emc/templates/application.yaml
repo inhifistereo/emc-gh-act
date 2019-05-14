@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "emc.fullname" . }}-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "emc.fullname" . }}-emctest
+    spec:
+      containers:
+      - name: emctest
+        image: dptest.azurecr.io/emctest:latest
+      imagePullSecrets:
+      - name: acr-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "emc.fullname" . }}-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: {{ template "emc.fullname" . }}-emctest
