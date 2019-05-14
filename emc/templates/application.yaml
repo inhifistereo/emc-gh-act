@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
+  name: rackoribs-service
 spec:
   type: LoadBalancer
   ports:
