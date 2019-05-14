@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "emc.fullname" . }}-deployment
+  name: {{ .Release.Name }}-deployment
 spec:
   template:
     metadata:
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rackoribs
+  name: {{ .Release.Name }}-service
 spec:
   type: LoadBalancer
   ports:
