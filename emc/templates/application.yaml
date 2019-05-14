@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "emc.fullname" . }}-service
+  name: rackoribs.com
 spec:
   type: LoadBalancer
   ports:
