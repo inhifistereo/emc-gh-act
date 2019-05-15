@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "emc.fullname" . }}-deployment
+  name: emc-deployment
 spec:
   template:
     metadata:
