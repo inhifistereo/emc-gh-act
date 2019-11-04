@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: emc-deployment
+  name: emctest
 spec:
   template:
     metadata:
