@@ -19,5 +19,4 @@ jobs:
         docker build . -t dptest.azurecr.io/emc-gh-act:${{ github.sha }}
         docker push dptest.azurecr.io/emc-gh-act:${{ github.sha }}
     - uses: Flydiverny/helm-package-action@0.1.0
-        args: "./emc"
     
