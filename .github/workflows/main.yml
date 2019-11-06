@@ -14,7 +14,10 @@ jobs:
         login-server: dptest.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
+        snapshot: true
     - run: |
         docker build . -t dptest.azurecr.io/emc-gh-act:${{ github.sha }}
         docker push dptest.azurecr.io/emc-gh-act:${{ github.sha }}
+    - name: Helm Package
+      uses: Flydiverny/helm-package-action@0.1.0
     
